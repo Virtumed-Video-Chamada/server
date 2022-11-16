@@ -24,7 +24,7 @@
 
 <a id="Virtumed-Video"></a>
 
-# Virtumed-Video
+# [Virtumed-Video](#Virtumed-Video)
 
 # <h1 align="center"> [![Typing SVG](<https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+a+Virtumed+Video!>)](https://git.io/typing-svg) </h1>
 
@@ -119,7 +119,7 @@ Inicie o servidor
 | [<img src="https://avatars.githubusercontent.com/u/96363582?v=4" width=115><br><sub>Humberto Oliveira</sub>](https://github.com/LyoDekken) | [<img src="https://avatars.githubusercontent.com/u/78213513?v=4" width=115><br><sub>Thaís Monteiro</sub>](https://github.com/Thais-Mont) | [<img src="https://avatars.githubusercontent.com/u/97999169?v=4" width=115><br><sub>Lázaro Enrico</sub>](https://github.com/Lazaroenrico) | [<img src="https://avatars.githubusercontent.com/u/97922515?v=4" width=115><br><sub>Daniel Mota</sub>](https://github.com/danmota96) | [<img src="https://avatars.githubusercontent.com/u/97128625?v=4" width=115><br><sub>Maycon Morais</sub>](https://github.com/maycomorais) | [<img src="https://avatars.githubusercontent.com/u/101481104?v=4" width=115><br><sub>Beatriz Lages</sub>](https://github.com/BiahLages) |
 | :----------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------- |
 
-[Voltar ao topo](#coluna_reta_api)
+[Voltar ao topo](#Virtumed-Video)
 
 ## License
 
