@@ -22,51 +22,104 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+<a id="Virtumed-Video"></a>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# Virtumed-Video
 
-## Installation
+# <h1 align="center"> [![Typing SVG](<https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+a+Virtumed+Video!>)](https://git.io/typing-svg) </h1>
+
+[Projeto Desenvolvido no Bootcamp da Blue edtech.](https://blueedtech.gitbook.io/m7-bootcamp/challenges/virtumed-videoconferencia)
+
+---
+
+## Menu
+
+### [Abrir e rodar o projeto](#abrir_e_rodar_o_projeto)
+
+### [Acesso ao projeto](#acesso_ao_projeto)
+
+### [Rodando Localmente](#rodando_localmente)
+
+### [Stack utilizada](#stack_utilizada)
+
+### [Autores](#autores)
+
+---
+
+<a id="abrir_e_rodar_o_projeto"></a>
+
+## Abrir e rodar o projeto
+
+1. Instalar o Git Bash em sua máquina. <br>
+2. Criar uma pasta do projeto em seu computador. <br>
+3. Clique com o botão direito do mouse na pasta e selecione o Git bash. <br>
+4. Após abrir a janela, vamos dar início no clone do projeto.<br>
+
+Clone o projeto na janela que abriu com o seguinte comando:
 
 ```bash
-$ npm install
+  git clone git@github.com:Virtumed-Video-Chamada/server.git
 ```
 
-## Running the app
+Após isso pode fechar a janela!
+
+---
+
+<a id="acesso_ao_projeto"></a>
+
+## Acesso ao projeto
+
+Entre na pasta do projeto pelo Visual Studio, Abra o terminal do visual Studio e
+vá para o diretório do projeto com o comando:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+  cd back-end
 ```
 
-## Test
+Instale as dependências
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+  npm i
 ```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+<a id="rodando_localmente"></a>
 
-## Stay in touch
+## Rodando localmente
 
--   Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
--   Website - [https://nestjs.com](https://nestjs.com/)
--   Twitter - [@nestframework](https://twitter.com/nestframework)
+Inicie o servidor
+
+```bash
+  npm run start:dev
+```
+
+---
+
+<a id="stack_utilizada"></a>
+
+## Stack utilizada
+
+**Linguagens:**
+<img align="center" alt="TypeScript" src="https://img.shields.io/badge/-Typescript-blue?style=for-the-badge&logo=typescript&message=TypeScript&color=blue&logoColor=white">
+
+**Frameworks:**
+<img align="center" alt="NodeJs" src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white"> <img align="center" alt="Nestjs" src="https://img.shields.io/badge/-NestJS-pink?style=for-the-badge&logo=nestjs&message=NestJs&color=rgb(238,%2058,%2084)">
+
+**Ferramentas:**
+<img align="center" src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white" alt="Visual Studio">
+<img align="center" src="https://img.shields.io/badge/-Docker-blue?style=for-the-badge&logo=docker&logoColor=white" alt="docker">
+
+---
+
+<a id="autores"></a>
+
+## Autor(es)
+
+| [<img src="https://avatars.githubusercontent.com/u/96363582?v=4" width=115><br><sub>Humberto Oliveira</sub>](https://github.com/LyoDekken) | [<img src="https://avatars.githubusercontent.com/u/78213513?v=4" width=115><br><sub>Thaís Monteiro</sub>](https://github.com/Thais-Mont) | [<img src="https://avatars.githubusercontent.com/u/97999169?v=4" width=115><br><sub>Lázaro Enrico</sub>](https://github.com/Lazaroenrico) | [<img src="https://avatars.githubusercontent.com/u/97922515?v=4" width=115><br><sub>Daniel Mota</sub>](https://github.com/danmota96) | [<img src="https://avatars.githubusercontent.com/u/97128625?v=4" width=115><br><sub>Maycon Morais</sub>](https://github.com/maycomorais) | [<img src="https://avatars.githubusercontent.com/u/101481104?v=4" width=115><br><sub>Beatriz Lages</sub>](https://github.com/BiahLages) |
+| :----------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------- |
+
+[Voltar ao topo](#coluna_reta_api)
 
 ## License
 
