@@ -1,3 +1,5 @@
+import { Role } from '@prisma/client';
+
 export const Speciality: string[] = [
     'Alergologia',
     'Angiologia',
@@ -9,18 +11,12 @@ export const Speciality: string[] = [
     'Cirurgia de tórax',
 ];
 
-export enum Role {
-    Admin,
-    Doctor,
-    Pacient,
-}
-
 export class User {
     id: string;
-    name: string;
-    crm?: string;
-    role: Role;
-    speciality?: typeof Speciality;
     email: string;
+    name: string;
     password: string;
+    crm?: string;
+    role?: Role;
+    speciality?: typeof Speciality;
 }

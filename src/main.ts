@@ -5,12 +5,8 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-    const app = await NestFactory.create<NestExpressApplication>(AppModule);
-
-    app.enableCors({
-        credentials: true,
-        allowedHeaders: '*',
-        origin: '*',
+    const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+        cors: true,
     });
 
     // Para conseguir pegar o protocolo https
@@ -31,7 +27,8 @@ async function bootstrap() {
         .setDescription('An api for video calling doctors and patients')
         .setVersion('1.0.0')
         .addTag('status')
-        .addTag('auth')
+        .addTag('access')
+        .addTag('cadastrar')
         .addBearerAuth()
         .build();
 
