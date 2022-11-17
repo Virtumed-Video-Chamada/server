@@ -1,10 +1,8 @@
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as CONSTANT from '../constants/constants.api';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Config } from 'src/app/models/config.model';
 import { Auth, getAuth } from 'firebase/auth';
-import * as admin from 'firebase-admin';
 
 import {
     CollectionReference,
@@ -44,31 +42,5 @@ export class FirebaseService {
 
     private _createCollections() {
         this.usersCollection = collection(this.fireStore, 'users');
-    }
-
-    private getToken(authToken: string): string {
-        const match = authToken.match(/^Bearer (.*)$/);
-        if (!match || match.length < 2) {
-            throw new UnauthorizedException(CONSTANT.INVALID_BEARER_TOKEN);
-        }
-        return match[1];
-    }
-
-    public async authenticate(authToken: string): Promise<any> {
-        const tokenString = this.getToken(authToken);
-        try {
-            const decodedToken: admin.auth.DecodedIdToken = await admin
-                .auth()
-                .verifyIdToken(tokenString);
-            this.logger.log(`${JSON.stringify(decodedToken)}`);
-            console.log(decodedToken);
-            const { email, uid, role } = decodedToken;
-            return { email, uid, role };
-        } catch (err) {
-            this.logger.error(
-                `error while authenticate request ${err.message}`,
-            );
-            throw new UnauthorizedException(err.message);
-        }
     }
 }

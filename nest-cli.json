@@ -4,11 +4,6 @@
     "sourceRoot": "src",
     "root": "./",
     "compilerOptions": {
-        "assets": [
-            {
-                "include": "mail/**"
-            }
-        ],
         "watchAssets": true
     }
 }
