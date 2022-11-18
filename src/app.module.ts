@@ -7,9 +7,11 @@ import { ClinicModule } from './clinic/clinic.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { PacientModule } from './pacient/pacient.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { MailModule } from './email/mail.module';
 
 @Module({
     imports: [
+        MailModule,
         PrismaModule,
         AuthModule,
         DoctorModule,
