@@ -10,7 +10,7 @@ export const LoggedAdmin = createParamDecorator((_, ctx: ExecutionContext) => {
 
     delete user.password;
 
-    if (user.roles === 'ADMIN') {
+    if (user.role === 'Admin') {
         return user;
     } else {
         throw new UnauthorizedException(

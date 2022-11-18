@@ -7,21 +7,10 @@ import {
     MinLength,
     MaxLength,
     Matches,
-    IsArray,
     IsEnum,
 } from 'class-validator';
 
-import { Speciality } from 'src/models/user.model';
-
 export class RegisterDto {
-    @IsString()
-    @IsNotEmpty()
-    @ApiProperty({
-        description: 'nome do Usuário',
-        example: 'Humberto',
-    })
-    name: string;
-
     @IsEmail()
     @IsNotEmpty()
     @ApiProperty({
@@ -43,16 +32,6 @@ export class RegisterDto {
     })
     password: string;
 
-    @IsString()
-    @IsNotEmpty()
-    @MinLength(4)
-    @MaxLength(8)
-    @ApiProperty({
-        description: 'CRM do Usuário',
-        example: '194528',
-    })
-    crm: string;
-
     @IsEnum(Role)
     @IsNotEmpty()
     @ApiProperty({
@@ -60,12 +39,4 @@ export class RegisterDto {
         example: 'Doctor',
     })
     role: Role;
-
-    @IsArray()
-    @IsNotEmpty()
-    @ApiProperty({
-        description: 'Especialidade do médico',
-        example: ['Alergologia', 'Angiologia'],
-    })
-    speciality: typeof Speciality;
 }

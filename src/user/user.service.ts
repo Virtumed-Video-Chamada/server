@@ -3,13 +3,12 @@ import * as bcrypt from 'bcrypt';
 import { User } from 'src/models/user.model';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { handleError } from 'src/utils/handle-error.util';
-import { RegisterDto } from './dto/register-doctor.dto';
+import { createUserDto } from './dto/createUser.dto';
 
 @Injectable()
 export class UserService {
     private userSelect = {
         id: true,
-        name: true,
         email: true,
         password: false,
         role: true,
@@ -19,7 +18,31 @@ export class UserService {
 
     constructor(private readonly prisma: PrismaService) {}
 
-    async createUser(dto: RegisterDto): Promise<User> {
+    async createAdmin(dto: createUserDto): Promise<User> {
+        await this.validPassword(dto);
+        const newDoctor = await this.newAdmin(dto);
+        return newDoctor;
+    }
+
+    async createPacient(dto: createUserDto): Promise<User> {
+        await this.validPassword(dto);
+        const newDoctor = await this.newPacient(dto);
+        return newDoctor;
+    }
+
+    async createClinic(dto: createUserDto): Promise<User> {
+        await this.validPassword(dto);
+        const newDoctor = await this.newClinic(dto);
+        return newDoctor;
+    }
+
+    async createDoctor(dto: createUserDto): Promise<User> {
+        await this.validPassword(dto);
+        const newDoctor = await this.newDoctor(dto);
+        return newDoctor;
+    }
+
+    async validPassword(dto: createUserDto) {
         if (dto.password != dto.confirmPassword) {
             throw new BadRequestException(
                 'As senhas informadas não são iguais.',
@@ -27,13 +50,37 @@ export class UserService {
         }
 
         delete dto.confirmPassword;
+    }
 
+    async hashPassword(dto: createUserDto): Promise<string> {
         const hashPassword = await bcrypt.hash(dto.password, 10);
+
+        return hashPassword;
+    }
+
+    async newDoctor(dto: createUserDto): Promise<User> {
+        const hashPassword = await this.hashPassword(dto);
 
         const newDoctor = await this.prisma.user
             .create({
                 data: {
-                    name: dto.name,
+                    email: dto.email,
+                    role: 'Doctor',
+                    password: hashPassword,
+                },
+                select: this.userSelect,
+            })
+            .catch(handleError);
+
+        return newDoctor;
+    }
+
+    async newAdmin(dto: createUserDto): Promise<User> {
+        const hashPassword = await this.hashPassword(dto);
+
+        const newDoctor = await this.prisma.user
+            .create({
+                data: {
                     email: dto.email,
                     role: 'Admin',
                     password: hashPassword,
@@ -42,14 +89,39 @@ export class UserService {
             })
             .catch(handleError);
 
-        await this.prisma.user.update({
-            where: {
-                email: dto.email,
-            },
-            data: {
-                password: hashPassword,
-            },
-        });
+        return newDoctor;
+    }
+
+    async newClinic(dto: createUserDto): Promise<User> {
+        const hashPassword = await this.hashPassword(dto);
+
+        const newDoctor = await this.prisma.user
+            .create({
+                data: {
+                    email: dto.email,
+                    role: 'Clinic',
+                    password: hashPassword,
+                },
+                select: this.userSelect,
+            })
+            .catch(handleError);
+
+        return newDoctor;
+    }
+
+    async newPacient(dto: createUserDto): Promise<User> {
+        const hashPassword = await this.hashPassword(dto);
+
+        const newDoctor = await this.prisma.user
+            .create({
+                data: {
+                    email: dto.email,
+                    role: 'Pacient',
+                    password: hashPassword,
+                },
+                select: this.userSelect,
+            })
+            .catch(handleError);
 
         return newDoctor;
     }
