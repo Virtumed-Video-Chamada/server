@@ -28,7 +28,10 @@ async function bootstrap() {
         .setVersion('1.0.0')
         .addTag('status')
         .addTag('access')
-        .addTag('cadastrar')
+        .addTag('register')
+        .addTag('clinic')
+        .addTag('doctor')
+        .addTag('pacient')
         .addBearerAuth()
         .build();
 

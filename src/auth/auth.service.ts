@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginResponseDto } from './dto/login-response.dto';
+import { User } from 'src/models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -12,9 +13,7 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async login(loginDto: LoginDto): Promise<LoginResponseDto> {
-        const { email, password } = loginDto;
-
+    async validUserExist(email: string): Promise<User> {
         // Procura e checa se o user existe, usando o email
         const user = await this.prisma.user.findUnique({
             where: { email },
@@ -23,6 +22,11 @@ export class AuthService {
         if (!user) {
             throw new UnauthorizedException('Usuário e/ou senha inválidos!');
         }
+
+        return user;
+    }
+
+    async validPassword(password: string, user: User) {
         // Valida se a senha informada é correta
         const isHashValid = await bcrypt.compare(password, user.password);
 
@@ -31,6 +35,13 @@ export class AuthService {
         }
 
         delete user.password;
+    }
+
+    async login(loginDto: LoginDto): Promise<LoginResponseDto> {
+        const { email, password } = loginDto;
+
+        const user = await this.validUserExist(email);
+        await this.validPassword(password, user);
 
         return {
             token: this.jwtService.sign({ email }),

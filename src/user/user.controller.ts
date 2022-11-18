@@ -1,19 +1,60 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { RegisterDto } from './dto/register-doctor.dto';
+import { createUserDto } from './dto/createUser.dto';
+import { LoggedUser } from 'src/auth/decorators/logged-user.decorator';
+import { User } from 'src/models/user.model';
+import { AuthGuard } from '@nestjs/passport';
+import { LoggedAdmin } from 'src/auth/decorators/logged-admin.decorator';
 
-@ApiTags('cadastrar')
-@ApiBearerAuth()
-@Controller('cadastrar')
+@ApiTags('register')
+@Controller('register')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
+    @Post('admin')
+    @ApiOperation({
+        summary: 'Cadastrar um Admin',
+    })
+    async createAdmin(
+        @LoggedAdmin() user: User,
+        @Body() createDocotor: createUserDto,
+    ) {
+        return this.userService.createDoctor(createDocotor);
+    }
+
     @Post('doctor')
     @ApiOperation({
-        summary: 'Cadastrar um doutor',
+        summary: 'Cadastrar um Doutor',
     })
-    async createUser(@Body() createUserDto: RegisterDto) {
-        return this.userService.createUser(createUserDto);
+    async createDoctor(
+        @LoggedUser() user: User,
+        @Body() createDocotor: createUserDto,
+    ) {
+        return this.userService.createDoctor(createDocotor);
+    }
+
+    @Post('pacient')
+    @ApiOperation({
+        summary: 'Cadastrar um Paciente',
+    })
+    async createPacient(
+        @LoggedUser() user: User,
+        @Body() createDocotor: createUserDto,
+    ) {
+        return this.userService.createDoctor(createDocotor);
+    }
+
+    @Post('clinic')
+    @ApiOperation({
+        summary: 'Cadastrar uma Clínica',
+    })
+    async createClinic(
+        @LoggedUser() user: User,
+        @Body() createDocotor: createUserDto,
+    ) {
+        return this.userService.createDoctor(createDocotor);
     }
 }
