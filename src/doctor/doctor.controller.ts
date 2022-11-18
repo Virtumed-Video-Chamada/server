@@ -1,44 +1,45 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete,
-} from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { LoggedDoctor } from 'src/auth/decorators/logged-doctor.decorator';
+import { User } from 'src/models/user.model';
 import { DoctorService } from './doctor.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { UpdateDoctorDto } from './dto/update-doctor.dto';
 
 @ApiTags('doctor')
 @Controller('doctor')
 export class DoctorController {
     constructor(private readonly doctorService: DoctorService) {}
 
-    @Post()
-    create(@Body() createDoctorDto: CreateDoctorDto) {
-        return this.doctorService.create(createDoctorDto);
-    }
-
-    @Get()
+    @Get('all')
+    @ApiOperation({
+        summary: 'Retorna todos os doutores',
+    })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findAll() {
         return this.doctorService.findAll();
     }
 
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.doctorService.findOne(+id);
+    @ApiOperation({
+        summary: 'Visualizar um doutor pelo ID',
+    })
+    findOne(@LoggedDoctor() user: User) {
+        return this.doctorService.findById(user.id);
     }
 
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updateDoctorDto: UpdateDoctorDto) {
-        return this.doctorService.update(+id, updateDoctorDto);
-    }
-
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.doctorService.remove(+id);
+    @ApiOperation({
+        summary: 'Editar um doutor pelo ID',
+    })
+    updateUser(
+        @LoggedDoctor() user: User,
+        @Body() udateUserDto: CreateDoctorDto,
+    ) {
+        return this.doctorService.updateDoctor(user.id, udateUserDto);
     }
 }

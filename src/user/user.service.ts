@@ -11,7 +11,7 @@ export class UserService {
         id: true,
         email: true,
         password: false,
-        role: true,
+        role: false,
         createdAt: true,
         updateAt: true,
     };
@@ -125,4 +125,10 @@ export class UserService {
 
         return newDoctor;
     }
+
+    //<----------------- Lógica de deletar por ID ------------------>//
+    async delete(id: string) {
+        await this.prisma.user.delete({ where: { id } });
+    }
+    //<----------------------------------->//
 }

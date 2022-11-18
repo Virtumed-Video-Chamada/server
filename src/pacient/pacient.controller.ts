@@ -1,47 +1,45 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete,
-} from '@nestjs/common';
-import { PacientService } from './pacient.service';
+import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { LoggedClinic } from 'src/auth/decorators/logged-clinic.decorator';
+import { User } from 'src/models/user.model';
 import { CreatePacientDto } from './dto/create-pacient.dto';
-import { UpdatePacientDto } from './dto/update-pacient.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { PacientService } from './pacient.service';
 
-@ApiTags('pacient')
-@Controller('pacient')
+@ApiTags('clinic')
+@Controller('clinic')
 export class PacientController {
     constructor(private readonly pacientService: PacientService) {}
 
-    @Post()
-    create(@Body() createPacientDto: CreatePacientDto) {
-        return this.pacientService.create(createPacientDto);
-    }
-
-    @Get()
+    @Get('all')
+    @ApiOperation({
+        summary: 'Retorna todas as clínicas',
+    })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findAll() {
         return this.pacientService.findAll();
     }
 
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.pacientService.findOne(+id);
+    @ApiOperation({
+        summary: 'Visualizar uma pacient pelo ID',
+    })
+    findOne(@LoggedClinic() user: User) {
+        return this.pacientService.findById(user.id);
     }
 
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @Patch(':id')
-    update(
-        @Param('id') id: string,
-        @Body() updatePacientDto: UpdatePacientDto,
+    @ApiOperation({
+        summary: 'Editar uma clínica pelo ID',
+    })
+    updateUser(
+        @LoggedClinic() user: User,
+        @Body() updatePacientDto: CreatePacientDto,
     ) {
-        return this.pacientService.update(+id, updatePacientDto);
-    }
-
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.pacientService.remove(+id);
+        return this.pacientService.updatePacient(user.id, updatePacientDto);
     }
 }

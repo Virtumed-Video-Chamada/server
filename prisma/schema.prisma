@@ -16,7 +16,7 @@ model User {
     email    String @unique
     password String
 
-    role Role @default(Admin)
+    role Role @default(Pacient)
 
     Clinic   Clinic? @relation(fields: [clinicId], references: [id])
     clinicId String?
@@ -39,6 +39,7 @@ model Clinic {
     nameClinic String @unique
     cnpj       String @unique
     phone      String @unique
+    cep        String
 
     user User[]
 
@@ -54,6 +55,10 @@ model Doctor {
     id String @id @default(uuid())
 
     nameDoctor String @unique
+    crm        String @unique
+    cpf        String @unique
+
+    Speciality String[]
 
     Clinic   Clinic? @relation(fields: [clinicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     clinicId String?
@@ -71,8 +76,9 @@ model Pacient {
 
     namePacient String @unique
 
-    cnpj  String @unique
+    cpf   String @unique
     phone String @unique
+    cep   String
 
     user User[]
 
@@ -82,10 +88,10 @@ model Pacient {
     @@map("pacient")
 }
 
-model Agend {
+model MedicalRecord {
     id String @id @default(uuid())
 
-    @@map("agend")
+    @@map("MedicalRecord")
 }
 
 enum Role {

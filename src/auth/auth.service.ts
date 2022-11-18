@@ -13,10 +13,23 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
+    private userSelect = {
+        id: true,
+        email: true,
+        password: true,
+        role: false,
+        doctorId: false,
+        pacientId: false,
+        clinicId: false,
+        createdAt: true,
+        updateAt: true,
+    };
+
     async validUserExist(email: string): Promise<User> {
         // Procura e checa se o user existe, usando o email
         const user = await this.prisma.user.findUnique({
             where: { email },
+            select: this.userSelect,
         });
 
         if (!user) {

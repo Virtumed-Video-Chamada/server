@@ -1,44 +1,45 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete,
-} from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { LoggedClinic } from 'src/auth/decorators/logged-clinic.decorator';
+import { User } from 'src/models/user.model';
 import { ClinicService } from './clinic.service';
 import { CreateClinicDto } from './dto/create-clinic.dto';
-import { UpdateClinicDto } from './dto/update-clinic.dto';
 
 @ApiTags('clinic')
 @Controller('clinic')
 export class ClinicController {
     constructor(private readonly clinicService: ClinicService) {}
 
-    @Post()
-    create(@Body() createClinicDto: CreateClinicDto) {
-        return this.clinicService.create(createClinicDto);
-    }
-
-    @Get()
+    @Get('all')
+    @ApiOperation({
+        summary: 'Retorna todas as clínicas',
+    })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findAll() {
         return this.clinicService.findAll();
     }
 
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.clinicService.findOne(+id);
+    @ApiOperation({
+        summary: 'Visualizar uma clínica pelo ID',
+    })
+    findOne(@LoggedClinic() user: User) {
+        return this.clinicService.findById(user.id);
     }
 
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updateClinicDto: UpdateClinicDto) {
-        return this.clinicService.update(+id, updateClinicDto);
-    }
-
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.clinicService.remove(+id);
+    @ApiOperation({
+        summary: 'Editar uma clínica pelo ID',
+    })
+    updateUser(
+        @LoggedClinic() user: User,
+        @Body() udateClinicDto: CreateClinicDto,
+    ) {
+        return this.clinicService.updateClinic(user.id, udateClinicDto);
     }
 }

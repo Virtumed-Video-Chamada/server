@@ -1,8 +1,16 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import {
+    Controller,
+    Post,
+    Body,
+    UseGuards,
+    Delete,
+    Param,
+    HttpCode,
+    HttpStatus,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { createUserDto } from './dto/createUser.dto';
-import { LoggedUser } from 'src/auth/decorators/logged-user.decorator';
 import { User } from 'src/models/user.model';
 import { AuthGuard } from '@nestjs/passport';
 import { LoggedAdmin } from 'src/auth/decorators/logged-admin.decorator';
@@ -29,10 +37,7 @@ export class UserController {
     @ApiOperation({
         summary: 'Cadastrar um Doutor',
     })
-    async createDoctor(
-        @LoggedUser() user: User,
-        @Body() createDocotor: createUserDto,
-    ) {
+    async createDoctor(@Body() createDocotor: createUserDto) {
         return this.userService.createDoctor(createDocotor);
     }
 
@@ -40,10 +45,7 @@ export class UserController {
     @ApiOperation({
         summary: 'Cadastrar um Paciente',
     })
-    async createPacient(
-        @LoggedUser() user: User,
-        @Body() createDocotor: createUserDto,
-    ) {
+    async createPacient(@Body() createDocotor: createUserDto) {
         return this.userService.createDoctor(createDocotor);
     }
 
@@ -51,10 +53,16 @@ export class UserController {
     @ApiOperation({
         summary: 'Cadastrar uma Clínica',
     })
-    async createClinic(
-        @LoggedUser() user: User,
-        @Body() createDocotor: createUserDto,
-    ) {
+    async createClinic(@Body() createDocotor: createUserDto) {
         return this.userService.createDoctor(createDocotor);
+    }
+
+    @Delete(':id')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @ApiOperation({
+        summary: 'Remover um doutor pelo ID',
+    })
+    delete(@LoggedAdmin() user: User, @Param('id') id: string) {
+        this.userService.delete(id);
     }
 }

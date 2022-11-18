@@ -7,6 +7,21 @@ export const users: Prisma.UserCreateInput[] = [
         password: 'Abc@1234',
         role: 'Admin',
     },
+    {
+        email: 'doctor@email.com',
+        password: 'Abc@1234',
+        role: 'Doctor',
+    },
+    {
+        email: 'clinic@email.com',
+        password: 'Abc@1234',
+        role: 'Clinic',
+    },
+    {
+        email: 'pacient@email.com',
+        password: 'Abc@1234',
+        role: 'Pacient',
+    },
 ];
 
 export const user = async (prisma: PrismaClient) => {

@@ -1,26 +1,103 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { User } from 'src/models/user.model';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePacientDto } from './dto/create-pacient.dto';
-import { UpdatePacientDto } from './dto/update-pacient.dto';
 
 @Injectable()
 export class PacientService {
-    create(createPacientDto: CreatePacientDto) {
-        return 'This action adds a new pacient';
+    private userSelect = {
+        id: true,
+        email: true,
+        password: false,
+        role: false,
+        doctorId: false,
+        pacientId: false,
+        clinicId: false,
+        createdAt: true,
+        updateAt: true,
+    };
+    constructor(private readonly prisma: PrismaService) {}
+
+    //<-------------- Lógica de encontrar Todos --------------------->//
+    async findAll(): Promise<User[]> {
+        const pacient = await this.validUsersExist();
+        return pacient;
     }
 
-    findAll() {
-        return `This action returns all pacient`;
+    async findAllPacients(): Promise<User[]> {
+        const doctors = await this.prisma.user.findMany({
+            where: {
+                role: 'Doctor',
+            },
+            select: this.userSelect,
+        });
+
+        return doctors;
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} pacient`;
+    async validUsersExist(): Promise<User[]> {
+        const doctors = await this.findAllPacients();
+
+        if (!doctors) {
+            throw new NotFoundException(
+                `Nenhum registro de doutores encontrado.`,
+            );
+        }
+
+        return doctors;
+    }
+    //<----------------------------------->//
+
+    //<----------------- Lógica de encontar por ID ------------------>//
+    async findById(id: string): Promise<User> {
+        const user = await this.prisma.user.findUnique({
+            where: { id },
+            select: this.userSelect,
+        });
+
+        if (!user) {
+            throw new NotFoundException(
+                `Registro com o ID '${id}' não encontrado.`,
+            );
+        }
+
+        delete user.password;
+
+        return user;
     }
 
-    update(id: number, updatePacientDto: UpdatePacientDto) {
-        return `This action updates a #${id} pacient`;
-    }
+    async findOne(id: string): Promise<User> {
+        const user = await this.findById(id);
 
-    remove(id: number) {
-        return `This action removes a #${id} pacient`;
+        return user;
     }
+    //<----------------------------------->//
+
+    //<----------------- Lógica de atualizar por ID ------------------>//
+    async updatePacient(id: string, dto: CreatePacientDto): Promise<User> {
+        await this.prisma.user.findUnique({
+            where: { id },
+            include: {
+                Doctor: true,
+            },
+        });
+
+        return this.prisma.user.update({
+            where: {
+                id,
+            },
+            data: {
+                email: dto.email,
+                Doctor: {
+                    update: {
+                        Speciality: dto.Speciality,
+                        nameDoctor: dto.nameDoctor,
+                        cpf: dto.cpf,
+                        crm: dto.crm,
+                    },
+                },
+            },
+        });
+    }
+    //<----------------------------------->//
 }

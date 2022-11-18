@@ -6,16 +6,18 @@ import { UserModule } from './user/user.module';
 import { ClinicModule } from './clinic/clinic.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { PacientModule } from './pacient/pacient.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-    controllers: [AppController],
     imports: [
+        PrismaModule,
         AuthModule,
         DoctorModule,
         ClinicModule,
         PacientModule,
         UserModule,
     ],
+    controllers: [AppController],
     providers: [AppService],
 })
 export class AppModule {}
