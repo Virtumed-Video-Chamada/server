@@ -6,14 +6,14 @@ import { User } from 'src/models/user.model';
 import { CreatePacientDto } from './dto/create-pacient.dto';
 import { PacientService } from './pacient.service';
 
-@ApiTags('clinic')
-@Controller('clinic')
+@ApiTags('pacient')
+@Controller('pacient')
 export class PacientController {
     constructor(private readonly pacientService: PacientService) {}
 
     @Get('all')
     @ApiOperation({
-        summary: 'Retorna todas as clínicas',
+        summary: 'Retorna todas os pacientes',
     })
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findAll() {
@@ -24,7 +24,7 @@ export class PacientController {
     @ApiBearerAuth()
     @Get(':id')
     @ApiOperation({
-        summary: 'Visualizar uma pacient pelo ID',
+        summary: 'Visualizar uma paciente pelo ID',
     })
     findOne(@LoggedClinic() user: User) {
         return this.pacientService.findById(user.id);
@@ -34,7 +34,7 @@ export class PacientController {
     @ApiBearerAuth()
     @Patch(':id')
     @ApiOperation({
-        summary: 'Editar uma clínica pelo ID',
+        summary: 'Editar uma paciente pelo ID',
     })
     updateUser(
         @LoggedClinic() user: User,
