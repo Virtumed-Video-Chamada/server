@@ -2,6 +2,7 @@ import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoggedClinic } from 'src/auth/decorators/logged-clinic.decorator';
+import { LoggedPacient } from 'src/auth/decorators/logged-pacient.decorator';
 import { User } from 'src/models/user.model';
 import { CreatePacientDto } from './dto/create-pacient.dto';
 import { PacientService } from './pacient.service';
@@ -11,12 +12,14 @@ import { PacientService } from './pacient.service';
 export class PacientController {
     constructor(private readonly pacientService: PacientService) {}
 
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @Get('all')
     @ApiOperation({
         summary: 'Retorna todas os pacientes',
     })
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    findAll() {
+    findAll(@LoggedClinic() user: User) {
         return this.pacientService.findAll();
     }
 
@@ -26,7 +29,7 @@ export class PacientController {
     @ApiOperation({
         summary: 'Visualizar uma paciente pelo ID',
     })
-    findOne(@LoggedClinic() user: User) {
+    findOne(@LoggedPacient() user: User) {
         return this.pacientService.findById(user.id);
     }
 

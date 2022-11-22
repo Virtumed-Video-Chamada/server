@@ -45,6 +45,8 @@ model Clinic {
 
     doctor Doctor[]
 
+    pacient Pacient[]
+
     createdAt DateTime @default(now()) @map("created_at")
     updateAt  DateTime @updatedAt @map("updated_at")
 
@@ -80,10 +82,13 @@ model Pacient {
     phone String @unique
     cep   String
 
-    user User[]
-
     createdAt DateTime @default(now()) @map("created_at")
     updateAt  DateTime @updatedAt @map("updated_at")
+    
+    Clinic    Clinic?  @relation(fields: [clinicId], references: [id])
+    clinicId  String?
+
+    user User[]
 
     @@map("pacient")
 }

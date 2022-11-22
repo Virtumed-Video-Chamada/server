@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { LoggedClinic } from 'src/auth/decorators/logged-clinic.decorator';
 import { LoggedDoctor } from 'src/auth/decorators/logged-doctor.decorator';
 import { User } from 'src/models/user.model';
 import { DoctorService } from './doctor.service';
@@ -11,12 +12,14 @@ import { CreateDoctorDto } from './dto/create-doctor.dto';
 export class DoctorController {
     constructor(private readonly doctorService: DoctorService) {}
 
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @Get('all')
     @ApiOperation({
-        summary: 'Retorna todos os doutores',
+        summary: 'Retorna todos os doutores dessa clínica',
     })
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    findAll() {
+    findAll(@LoggedClinic() user: User) {
         return this.doctorService.findAll();
     }
 

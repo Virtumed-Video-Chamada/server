@@ -14,6 +14,7 @@ import { createUserDto } from './dto/createUser.dto';
 import { User } from 'src/models/user.model';
 import { AuthGuard } from '@nestjs/passport';
 import { LoggedAdmin } from 'src/auth/decorators/logged-admin.decorator';
+import { LoggedClinic } from 'src/auth/decorators/logged-clinic.decorator';
 
 @ApiTags('register')
 @Controller('register')
@@ -37,7 +38,10 @@ export class UserController {
     @ApiOperation({
         summary: 'Cadastrar um Doutor',
     })
-    async createDoctor(@Body() createDocotor: createUserDto) {
+    async createDoctor(
+        @LoggedClinic() user: User,
+        @Body() createDocotor: createUserDto,
+    ) {
         return this.userService.createDoctor(createDocotor);
     }
 
@@ -45,7 +49,10 @@ export class UserController {
     @ApiOperation({
         summary: 'Cadastrar um Paciente',
     })
-    async createPacient(@Body() createDocotor: createUserDto) {
+    async createPacient(
+        @LoggedClinic() user: User,
+        @Body() createDocotor: createUserDto,
+    ) {
         return this.userService.createDoctor(createDocotor);
     }
 

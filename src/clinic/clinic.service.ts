@@ -100,4 +100,21 @@ export class ClinicService {
         });
     }
     //<----------------------------------->//
+
+    //<------------- Lógica de vizualizar doutor por Clínica ---------------------->//
+    async viewDoctorClinic(id: string): Promise<void> {
+        await this.prisma.doctor.update({
+            where: {
+                id,
+            },
+            data: {
+                Clinic: {
+                    update: {
+                        id,
+                    },
+                },
+            },
+        });
+    }
+    //<----------------------------------->//
 }
