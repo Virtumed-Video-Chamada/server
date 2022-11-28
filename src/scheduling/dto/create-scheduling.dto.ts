@@ -1,21 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class SchedulingDto {
 
-    @IsString()
+    @IsNumber()
     @ApiProperty({
         description: 'Dias que faltam para a consulta com o médico.',
-        example: '10',
+        example: 10,
     })
-    day: string
+    day: number
 
-    @IsString()
+    @IsNumber()
     @ApiProperty({
         description: 'Mes/meses que faltam para a consulta com o médico.',
-        example: '10',
+        example: 10,
     })
-    mounth: string
+    mounth: number
 
     @IsString()
     @ApiProperty({

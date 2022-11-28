@@ -27,9 +27,15 @@ export class PacientService {
     async findAllPacients(): Promise<User[]> {
         const doctors = await this.prisma.user.findMany({
             where: {
-                role: 'Doctor',
+                role: 'Clinic',
             },
-            select: this.userSelect,
+            include: {
+                Clinic: {
+                    select: {
+                        pacient: true,
+                    },
+                },
+            },
         });
 
         return doctors;

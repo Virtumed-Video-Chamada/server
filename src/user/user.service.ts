@@ -78,7 +78,7 @@ export class UserService {
     async newAdmin(dto: createUserDto): Promise<User> {
         const hashPassword = await this.hashPassword(dto);
 
-        const newDoctor = await this.prisma.user
+        const newAdmin = await this.prisma.user
             .create({
                 data: {
                     email: dto.email,
@@ -89,13 +89,13 @@ export class UserService {
             })
             .catch(handleError);
 
-        return newDoctor;
+        return newAdmin;
     }
 
     async newClinic(dto: createUserDto): Promise<User> {
         const hashPassword = await this.hashPassword(dto);
 
-        const newDoctor = await this.prisma.user
+        const newClinic = await this.prisma.user
             .create({
                 data: {
                     email: dto.email,
@@ -106,13 +106,13 @@ export class UserService {
             })
             .catch(handleError);
 
-        return newDoctor;
+        return newClinic;
     }
 
     async newPacient(dto: createUserDto): Promise<User> {
         const hashPassword = await this.hashPassword(dto);
 
-        const newDoctor = await this.prisma.user
+        const newPacient = await this.prisma.user
             .create({
                 data: {
                     email: dto.email,
@@ -123,7 +123,7 @@ export class UserService {
             })
             .catch(handleError);
 
-        return newDoctor;
+        return newPacient;
     }
 
     //<----------------- Lógica de deletar por ID ------------------>//
