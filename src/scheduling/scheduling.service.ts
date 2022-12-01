@@ -10,32 +10,34 @@ export class SchedulingService {
 
     constructor(private schedulerRegistry: SchedulerRegistry) { }
 
-    AddAgendMedic(dto: SchedulingDto) {
-        //quantos dias faltma para sua consulta
-        const data: Partial<SchedulingDto> = { ...dto }
-
-        const query = new CronJob(`${data.day}* * * * * *`, () => {
-            this.logger.warn(`Faltam ${data.day} para sua consulta com o médico ${data.name}.`)
+    AddMedicine(dto: SchedulingDto) {
+        // adicionar um remédio
+        const query = new CronJob(` *
+        ${dto.minute} 
+        ${dto.hour}
+        ${dto.day} 
+        ${dto.mounth}
+        ${dto.dayOfWeek} '`, () => {
+            this.logger.warn
         });
 
-        this.schedulerRegistry.addCronJob(data.name, query);
+        this.schedulerRegistry.addCronJob(dto.name, query);
         query.start();
 
         this.logger.warn(
-            `Consulta com o médico ${data.name} daqui a  ${data.day} dias!`,
+            `Consulta com o médico ${dto.name} para o dia  ${dto.day} dias!`,
         );
     }
 
 
-    CancelQuery(name: string) {
-        // cancelar sua uma consulta passando o nome do médico
+    CancelMedicine(name: string) {
+        // cancelar um remédio para tomar
         this.schedulerRegistry.deleteCronJob(name);
         this.logger.warn(`Consulta com médico ${name} foi cancelada`);
-
     }
 
-    getQuery() {
-        // ver as consultas 
+    getMedicine() {
+        //ver os remédios
         const querys = this.schedulerRegistry.getCronJobs();
         querys.forEach((value, key, map) => {
             let next;
@@ -49,4 +51,3 @@ export class SchedulingService {
     }
 }
 
- 

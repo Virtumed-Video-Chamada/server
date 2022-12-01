@@ -8,3 +8,4 @@ export class User {
     createdAt?: Date;
     updateAt?: Date;
 }
+
