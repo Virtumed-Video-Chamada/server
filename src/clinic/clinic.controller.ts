@@ -38,8 +38,8 @@ export class ClinicController {
     })
     updateUser(
         @LoggedClinic() user: User,
-        @Body() udateClinicDto: CreateClinicDto,
+        @Body() updateClinicDto: CreateClinicDto,
     ) {
-        return this.clinicService.updateClinic(user.id, udateClinicDto);
+        return this.clinicService.updateClinic(user.id, updateClinicDto);
     }
 }
