@@ -12,90 +12,65 @@ datasource db {
 
 model User {
     id String @id @default(uuid())
-
     email    String @unique
     password String
-
     role Role @default(Pacient)
-
     Clinic   Clinic? @relation(fields: [clinicId], references: [id])
     clinicId String?
-
     Doctor   Doctor? @relation(fields: [doctorId], references: [id])
     doctorId String?
-
     Pacient   Pacient? @relation(fields: [pacientId], references: [id])
     pacientId String?
-
     createdAt DateTime @default(now()) @map("created_at")
     updateAt  DateTime @updatedAt @map("updated_at")
-
     @@map("user")
 }
 
 model Clinic {
     id String @id @default(uuid())
-
     nameClinic String @unique
     cnpj       String @unique
     phone      String @unique
     cep        String
-
     user User[]
-
     doctor Doctor[]
-
     pacient Pacient[]
-
     createdAt DateTime @default(now()) @map("created_at")
     updateAt  DateTime @updatedAt @map("updated_at")
-
     @@map("clinic")
 }
 
 model Doctor {
     id String @id @default(uuid())
-
     nameDoctor String @unique
     crm        String @unique
     cpf        String @unique
-
     Speciality String[]
-
     Clinic   Clinic? @relation(fields: [clinicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     clinicId String?
-
     createdAt DateTime @default(now()) @map("created_at")
     updateAt  DateTime @updatedAt @map("updated_at")
-
     User User[]
-
     @@map("doctor")
 }
 
 model Pacient {
     id String @id @default(uuid())
-
     namePacient String @unique
-
     cpf   String @unique
     phone String @unique
     cep   String
-
     createdAt DateTime @default(now()) @map("created_at")
     updateAt  DateTime @updatedAt @map("updated_at")
     
     Clinic    Clinic?  @relation(fields: [clinicId], references: [id])
     clinicId  String?
-
     user User[]
-
     @@map("pacient")
 }
 
 model MedicalRecord {
     id String @id @default(uuid())
-
     @@map("MedicalRecord")
 }
 
