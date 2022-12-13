@@ -18,14 +18,14 @@ export class CreateDoctorDto {
 
     @IsOptional()
     @ApiProperty({
-        description: 'O nome da Empresa',
+        description: 'Crm do doutor',
         example: 'Empresa Ltda',
     })
     crm: string;
 
     @IsOptional()
     @ApiProperty({
-        description: 'O cnpj da empresa',
+        description: 'Cpf do doutor.',
         example: '101.123.54/0001-54',
     })
     cpf: string;

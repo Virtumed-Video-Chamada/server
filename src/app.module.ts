@@ -8,8 +8,6 @@ import { DoctorModule } from './doctor/doctor.module';
 import { PacientModule } from './pacient/pacient.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { MailModule } from './email/mail.module';
-import { SchidulingModule } from './scheduling/scheduling.module';
-import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
     imports: [
@@ -20,8 +18,6 @@ import { ScheduleModule } from '@nestjs/schedule';
         ClinicModule,
         PacientModule,
         UserModule,
-        SchidulingModule,
-        ScheduleModule.forRoot(),
     ],
     controllers: [AppController],
     providers: [AppService],
