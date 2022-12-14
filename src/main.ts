@@ -32,6 +32,7 @@ async function bootstrap() {
         .addTag('clinic')
         .addTag('doctor')
         .addTag('pacient')
+        .addTag('admin')
         .addTag('scheduling')
         .addBearerAuth()
         .build();

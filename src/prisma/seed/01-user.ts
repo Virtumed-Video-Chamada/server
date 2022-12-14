@@ -14,7 +14,7 @@ export const users: Prisma.UserCreateInput[] = [
                 cep: '06703-530',
                 doctor: {
                     create: {
-                        nameDoctor: 'bOCÓ',
+                        nameDoctor: 'Bocó',
                         cpf: '97.193.224/0001-00',
                         crm: '2945678',
                     },

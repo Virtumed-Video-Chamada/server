@@ -1,16 +1,37 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
-import { UserService } from './user.service';
+import {
+    Controller,
+    Post,
+    Body,
+    UseGuards,
+    Delete,
+    Param,
+    HttpCode,
+    HttpStatus,
+    Get,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { createUserDto } from './dto/createUser.dto';
 import { User } from 'src/models/user.model';
 import { AuthGuard } from '@nestjs/passport';
 import { LoggedAdmin } from 'src/auth/decorators/logged-admin.decorator';
-import { LoggedClinic } from 'src/auth/decorators/logged-clinic.decorator';
+import { AdminService } from './admin.service';
 
-@ApiTags('register')
-@Controller('register')
-export class UserController {
-    constructor(private readonly userService: UserService) {}
+@ApiTags('admin')
+@Controller('admin')
+export class AdminController {
+    constructor(private readonly userService: AdminService) {}
+
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
+    @Get('admin/get-doctors')
+    @ApiOperation({
+        summary:
+            'Retorna todos os Médicos através da pesquisa feita por um Administrador',
+    })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async findAllDoctors(@LoggedAdmin() user: User) {
+        return this.userService.findAllDoctors();
+    }
 
     @UseGuards(AuthGuard())
     @ApiBearerAuth()
@@ -30,7 +51,7 @@ export class UserController {
         summary: 'Cadastrar um Doutor',
     })
     async createDoctor(
-        @LoggedClinic() user: User,
+        @LoggedAdmin() user: User,
         @Body() createDoctor: createUserDto,
     ) {
         return this.userService.createDoctor(createDoctor);
@@ -41,7 +62,7 @@ export class UserController {
         summary: 'Cadastrar um Paciente',
     })
     async createPacient(
-        @LoggedClinic() user: User,
+        @LoggedAdmin() user: User,
         @Body() createPacient: createUserDto,
     ) {
         return this.userService.createDoctor(createPacient);
@@ -51,7 +72,19 @@ export class UserController {
     @ApiOperation({
         summary: 'Cadastrar uma Clínica',
     })
-    async createClinic(@Body() createClinic: createUserDto) {
+    async createClinic(
+        @LoggedAdmin() user: User,
+        @Body() createClinic: createUserDto,
+    ) {
         return this.userService.createDoctor(createClinic);
+    }
+
+    @Delete(':id')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @ApiOperation({
+        summary: 'Remover um doutor pelo ID',
+    })
+    delete(@LoggedAdmin() user: User, @Param('id') id: string) {
+        this.userService.delete(id);
     }
 }

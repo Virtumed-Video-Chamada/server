@@ -6,7 +6,7 @@ import { handleError } from 'src/utils/handle-error.util';
 import { createUserDto } from './dto/createUser.dto';
 
 @Injectable()
-export class UserService {
+export class AdminService {
     private userSelect = {
         id: true,
         email: true,
@@ -125,4 +125,21 @@ export class UserService {
 
         return newPacient;
     }
+
+    async findAllDoctors(): Promise<User[]> {
+        const doctor = await this.prisma.user.findMany({
+            where: {
+                role: 'Doctor',
+            },
+            select: this.userSelect,
+        });
+
+        return doctor;
+    }
+
+    //<----------------- Lógica de deletar por ID ------------------>//
+    async delete(id: string) {
+        await this.prisma.user.delete({ where: { id } });
+    }
+    //<----------------------------------->//
 }

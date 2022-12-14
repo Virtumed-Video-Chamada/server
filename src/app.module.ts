@@ -10,9 +10,11 @@ import { PrismaModule } from './prisma/prisma.module';
 import { MailModule } from './email/mail.module';
 import { SchidulingModule } from './scheduling/scheduling.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
     imports: [
+        AdminModule,
         MailModule,
         PrismaModule,
         AuthModule,
