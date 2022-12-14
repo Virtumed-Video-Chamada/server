@@ -18,6 +18,4 @@ export const LoggedClinic = createParamDecorator((_, ctx: ExecutionContext) => {
             'User does not have permission to access this route!',
         );
     }
-
-    return user;
 });

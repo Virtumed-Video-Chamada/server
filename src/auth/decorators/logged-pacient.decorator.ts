@@ -19,7 +19,5 @@ export const LoggedPacient = createParamDecorator(
                 'User does not have permission to access this route!',
             );
         }
-
-        return user;
     },
 );
