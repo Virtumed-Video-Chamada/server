@@ -18,15 +18,15 @@ export class CreateClinicDto {
 
     @IsOptional()
     @ApiProperty({
-        description: 'O nome da Empresa',
-        example: 'Empresa Ltda',
+        description: 'O telefone da empresa',
+        example: '(30) 3030-3030',
     })
     phone: string;
 
     @IsOptional()
     @ApiProperty({
-        description: 'O cnpj da empresa',
-        example: '101.123.54/0001-54',
+        description: 'O cep da empresa',
+        example: '20020-050',
     })
     cep: string;
 
